@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "iban-checker-api"
+		},
+		{
+			"path": "iban-checker-ui"
+		}
+	],
+	"settings": {}
+}

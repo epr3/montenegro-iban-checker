@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  database:
+    container_name: iban-checker-api-db
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: iban-checker-api
+      MYSQL_USER: iban-checker-api
+      MYSQL_PASSWORD: secret
+    command:
+      [
+        "mysqld",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+      ]
+    volumes:
+      - iban-checker-api_mysql:/var/lib/mysql
+    ports:
+      - 33006:3306
+
+  phpmyadmin:
+    container_name: iban-checker-api-phpmyadmin
+    depends_on:
+      - database
+    image: phpmyadmin/phpmyadmin
+    ports:
+        - 81:80
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+
+
+volumes:
+  iban-checker-api_mysql:
+
+networks:
+  default:
+    name: iban-checker-api-network
+
