@@ -1,5 +1,12 @@
-import { defineConfig } from "unocss";
+import { defineConfig, presetUno, presetWebFonts } from "unocss";
 
 export default defineConfig({
-  // ...UnoCSS options
+  presets: [
+    presetUno(),
+    presetWebFonts({
+      fonts: {
+        sans: "Lato:300,400,500,600,700",
+      },
+    }),
+  ],
 });

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@unocss/reset':
+    specifier: ^0.55.7
+    version: 0.55.7
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -859,6 +862,10 @@ packages:
   /@unocss/reset@0.55.4:
     resolution: {integrity: sha512-USn/uZiXDplwQwhodyE3wBm7SU9BUDbRJ3sl5SuULAC4uMkh2JE/EV+X88Vm4N9dEIAbuWLfG20fCuiEKA5+hA==}
     dev: true
+
+  /@unocss/reset@0.55.7:
+    resolution: {integrity: sha512-yvmLhxqUNgf6wue7IvhV/FdrQW9H9LF1Bmmhwwaiz2aV0E74aN4pbuYPZwNq3YafsQvNQ0UdtuXjddY4QMRCPw==}
+    dev: false
 
   /@unocss/scope@0.55.4:
     resolution: {integrity: sha512-3v/3X3pD+NXkPw7WOiePM9SpPbkVj+tzNnUsF4CX8AoTE+UcNt5hDiyHYvCRtk7Q27PRrEddaMMpoVUOyigO5A==}
