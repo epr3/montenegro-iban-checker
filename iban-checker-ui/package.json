@@ -10,15 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hyper-fetch/core": "5.7.0",
+    "@hyper-fetch/react": "5.7.0",
     "@unocss/reset": "^0.55.7",
+    "axios": "^1.5.0",
+    "formik": "^2.4.3",
+    "lodash-es": "^4.17.21",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "swr": "^2.2.2",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "@unocss/transformer-variant-group": "^0.55.7",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^9.0.0",
@@ -27,7 +35,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "prettier": "^3.0.3",
     "typescript": "^5.0.2",
-    "unocss": "^0.55.4",
+    "unocss": "^0.55.7",
     "vite": "^4.4.5"
   }
 }
