@@ -1,5 +1,2 @@
 
 
-from ..main import app
-
-

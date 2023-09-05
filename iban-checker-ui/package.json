@@ -7,14 +7,15 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@hyper-fetch/core": "5.7.0",
-    "@hyper-fetch/react": "5.7.0",
     "@unocss/reset": "^0.55.7",
     "axios": "^1.5.0",
     "formik": "^2.4.3",
+    "happy-dom": "^10.11.2",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,12 +23,15 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.2",
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@unocss/transformer-variant-group": "^0.55.7",
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "@vitest/coverage-istanbul": "^0.34.3",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -36,6 +40,7 @@
     "prettier": "^3.0.3",
     "typescript": "^5.0.2",
     "unocss": "^0.55.7",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vitest": "^0.34.3"
   }
 }

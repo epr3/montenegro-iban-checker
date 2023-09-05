@@ -1,10 +1,10 @@
 import { object, string } from "yup";
 import { useFormik } from "formik";
 
-import Button from "../atoms/Button";
-import Input from "../molecules/Input";
+import Button from "../../atoms/Button/Button";
+import Input from "../../molecules/Input/Input";
 import useSWRMutation from "swr/mutation";
-import { checkIban } from "../../services/check-iban";
+import { checkIban } from "../../../services/check-iban";
 
 const schema = object().shape({
   iban: string().required().label("IBAN"),
