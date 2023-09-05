@@ -6,7 +6,7 @@ class IBANModel(BaseModel):
   country_code: str = Field(title="Country code")
   checksum_digits: int = Field(title="Checksum digits")
   bank_code: str = Field(title="Bank code", pattern=r'[0-9]{3}')
-  account_number: str = Field(title="Account number", min_length=13, max_length=13, pattern=r'[0-9]{13}')
+  account_number: str = Field(title="Account number", pattern=r'[0-9]{13}')
   national_check_digits: int = Field(title="National check digits", gt=10)
 
   @field_validator("country_code")
