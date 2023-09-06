@@ -38,3 +38,19 @@ def test_check_iban_invalid_country_code():
     "status": status.HTTP_422_UNPROCESSABLE_ENTITY,
     "success": False
     }.keys()).issubset(set(response.json().keys()))
+
+
+def test_check_iban_invalid_national_check_digits():
+  response = client.post("/check-iban", json={
+    "country_code": "ME",
+    "checksum_digits": 25,
+    "national_check_digits": 51,
+    "bank_code": "505",
+    "account_number": "0000123456788"
+    })
+  assert response.status_code == status.HTTP_400_BAD_REQUEST
+  assert set({
+    "message": "National check digits do not match",
+    "status": status.HTTP_400_BAD_REQUEST,
+    "success": False
+    }.keys()).issubset(set(response.json().keys()))

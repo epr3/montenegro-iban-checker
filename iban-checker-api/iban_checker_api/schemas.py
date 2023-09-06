@@ -1,6 +1,29 @@
+from enum import Enum
+
 from pydantic import BaseModel, Field, field_validator
 
 from .constants import MONTENEGRO_COUNTRY_CODE, MONTENEGRO_CHECK_DIGITS
+
+
+class StatusEnum(str, Enum):
+  VALID = "VALID"
+  INVALID = "INVALID"
+
+
+class ValidationBase(BaseModel):
+  session_id: str = Field(title="Session ID")
+  status: StatusEnum = Field(title="Status")
+  iban: str = Field(title="IBAN")
+
+class ValidationCreate(ValidationBase):
+  pass
+
+class Validation(ValidationBase):
+  id: str
+  timestamp: str
+
+  class Config:
+      orm_mode = True
 
 class IBANModel(BaseModel):
   country_code: str = Field(title="Country code")
