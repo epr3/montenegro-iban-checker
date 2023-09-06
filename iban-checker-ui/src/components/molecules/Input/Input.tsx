@@ -37,8 +37,10 @@ const Input = ({
           placeholder={placeholder}
         />
       </div>
-      {isTouched && errors ? (
-        <span className="pl-2 text-red-500 font-semibold">{errors}</span>
+      {isTouched && errors && value.trim().length > 2 ? (
+        <span aria-live="polite" className="pl-2 text-red-500 font-semibold">
+          {errors}
+        </span>
       ) : null}
     </div>
   );

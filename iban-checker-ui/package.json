@@ -12,14 +12,15 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@uidotdev/usehooks": "^2.2.0",
     "@unocss/reset": "^0.55.7",
     "axios": "^1.5.0",
+    "dayjs": "^1.11.9",
     "formik": "^2.4.3",
     "happy-dom": "^10.11.2",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "swr": "^2.2.2",
     "yup": "^1.2.0"
   },
   "devDependencies": {

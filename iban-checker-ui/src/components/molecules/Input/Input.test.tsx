@@ -25,7 +25,7 @@ describe("Input", () => {
         type="text"
         onBlur={() => {}}
         onChange={() => {}}
-        value=""
+        value="test4"
         isTouched
         errors="Test error"
       />
