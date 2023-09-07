@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import Label from "./Label";
 
 describe("Label", () => {
-  it("Label to be in document", () => {
+  it("should be in the document", () => {
     render(<Label id="test" text="Test" />);
     expect(screen.getByText("Test")).toBeInTheDocument();
   });

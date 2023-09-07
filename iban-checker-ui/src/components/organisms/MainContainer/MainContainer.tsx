@@ -1,20 +1,25 @@
 import { object, string } from "yup";
 import { useFormik } from "formik";
 
-import { useThrottle } from "@uidotdev/usehooks";
-
 import Button from "../../atoms/Button/Button";
+import Alert from "../../atoms/Alert/Alert";
 import Input from "../../molecules/Input/Input";
 
-import { checkIban, verifyIban } from "../../../server/check-iban";
+import { useContext, useEffect } from "react";
 
-import { useEffect } from "react";
-import { AxiosError } from "axios";
+import { NotificationContext } from "../../../context/NotificationContext";
 
 const schema = object().shape({
   iban: string().required().length(22).label("IBAN"),
-  countryCode: string().required().length(2).label("Country code"),
-  checkDigits: string().required().matches(/25/).label("Check digits"),
+  countryCode: string()
+    .required()
+    .length(2)
+    .matches(/ME/, "Country code must be ME")
+    .label("Country code"),
+  checkDigits: string()
+    .required()
+    .matches(/25/, "Check digits must be 25")
+    .label("Check digits"),
   bankCode: string().required().length(3).label("Bank code"),
   accountNumber: string().required().length(13).label("Account number"),
   nationalCheckDigits: string()
@@ -23,7 +28,25 @@ const schema = object().shape({
     .label("National check digits"),
 });
 
-export default function MainContainer() {
+interface MainContainerProps {
+  submitFunc: ({
+    country_code,
+    bank_code,
+    checksum_digits,
+    account_number,
+    national_check_digits,
+  }: {
+    country_code: string;
+    bank_code: string;
+    checksum_digits: number;
+    account_number: string;
+    national_check_digits: number;
+  }) => Promise<void>;
+}
+
+export default function MainContainer({ submitFunc }: MainContainerProps) {
+  const { notifications } = useContext(NotificationContext);
+
   const {
     isSubmitting,
     getFieldProps,
@@ -31,6 +54,8 @@ export default function MainContainer() {
     errors,
     touched,
     setFieldValue,
+    resetForm,
+    isValid,
     values: { iban },
   } = useFormik({
     validationSchema: schema,
@@ -51,18 +76,16 @@ export default function MainContainer() {
         nationalCheckDigits,
       } = values;
 
-      const { data } = await checkIban({
+      await submitFunc({
         country_code: countryCode,
         bank_code: bankCode,
         checksum_digits: parseInt(checkDigits),
         account_number: accountNumber,
         national_check_digits: parseInt(nationalCheckDigits),
       });
-      sessionStorage.setItem("montenegro-iban:session", data.data.session_id);
+      resetForm();
     },
   });
-
-  const debouncedIban = useThrottle(iban, 3000);
 
   useEffect(() => {
     setFieldValue("countryCode", iban.length > 2 ? iban.substring(0, 2) : "");
@@ -78,25 +101,17 @@ export default function MainContainer() {
     );
   }, [iban, setFieldValue]);
 
-  useEffect(() => {
-    async function check() {
-      if (debouncedIban.length > 2) {
-        try {
-          const { data } = await verifyIban(debouncedIban);
-          console.log(data);
-        } catch (e) {
-          console.log((e as AxiosError).response);
-        }
-      }
-    }
-    check();
-  }, [debouncedIban]);
-
   return (
     <form
       onSubmit={handleSubmit}
       className="px-8 py-12 rounded-lg shadow-lg bg-white min-w-[600px] flex flex-col gap-4"
     >
+      {notifications.length ? (
+        <Alert
+          type={notifications[0].type}
+          message={notifications[0].message}
+        />
+      ) : null}
       <h1 className="text-3xl font-extrabold">Montenegro IBAN checker</h1>
 
       <Input
@@ -104,10 +119,17 @@ export default function MainContainer() {
         label="Enter your IBAN here"
         {...getFieldProps("iban")}
         isTouched={touched.iban}
-        errors={errors.iban}
+        errors={
+          errors.countryCode ||
+          errors.checkDigits ||
+          errors.bankCode ||
+          errors.accountNumber ||
+          errors.nationalCheckDigits ||
+          errors.iban
+        }
       />
       {touched.accountNumber && errors.accountNumber}
-      <Button disabled={isSubmitting} type="submit">
+      <Button disabled={!isValid || isSubmitting} type="submit">
         Check IBAN
       </Button>
     </form>

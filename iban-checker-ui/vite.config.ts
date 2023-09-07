@@ -11,7 +11,17 @@ export default defineConfig({
     environment: "happy-dom",
     setupFiles: "./tests/setup.ts",
     coverage: {
-      provider: "istanbul",
+      all: true,
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/main.tsx",
+        "src/vite-env.d.ts",
+        "src/config/index.ts",
+        "src/lib/axios.ts",
+        "src/server/**/*.ts",
+        "src/context/**/*.{ts,tsx}",
+      ],
+      provider: "v8",
     },
   },
 });
