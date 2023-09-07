@@ -56,9 +56,9 @@ async def read_root():
 
 
 @app.get("/validations")
-async def list_validations(page: int = 1, page_size: int = 12, db: Session = Depends(get_db), x_session_id: Optional[str] = Header(None)):
+async def list_validations(page: int = 1, page_size: int = 6, db: Session = Depends(get_db), x_session_id: Optional[str] = Header(None)):
     if x_session_id is None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Session ID is required")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail={"message": "Session ID is required", "data": None})
 
     validations = get_validations(db, x_session_id, page - 1, page_size)
     count = count_validations(db, x_session_id)
@@ -74,8 +74,8 @@ async def check_iban(iban: IBANModel, db: Session = Depends(get_db), x_session_i
 
     if calculated_national_digits != iban.national_check_digits:
         validation_schema.status = StatusEnum.INVALID
-        create_validation(db, validation=validation_schema)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="National check digits do not match")
+        validation = create_validation(db, validation=validation_schema)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail={"message": "National check digits do not match", "data": validation})
 
     check_digits_iban = iban.bank_code + iban.account_number + str(iban.national_check_digits) + map_country_chars_to_digits(iban.country_code) + "00"
 
@@ -83,33 +83,34 @@ async def check_iban(iban: IBANModel, db: Session = Depends(get_db), x_session_i
 
     if calculated_check_digits != iban.checksum_digits != MONTENEGRO_CHECK_DIGITS:
         validation_schema.status = StatusEnum.INVALID
-        create_validation(db, validation=validation_schema)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Checksum digits do not match")
+        validation = create_validation(db, validation=validation_schema)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail={"message": "Checksum digits do not match", "data": validation})
 
     validation = create_validation(db, validation=validation_schema)
 
     return JSONResponse(content=jsonable_encoder({"success": True, "message": "IBAN is valid", "data": validation, "status": status.HTTP_200_OK}), headers={"X-Session-ID": x_session_id}, status_code=status.HTTP_200_OK)
 
 
-@app.get("/check-iban/{iban}")
-async def check_partial_iban(iban: str):
-    if not iban:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="IBAN is required")
+# @app.get("/check-iban/{iban}")
+# async def check_partial_iban(iban: str):
+#     if not iban:
+#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="IBAN is required")
 
-    if len(iban) > 4:
-        if int(iban[2:4]) != MONTENEGRO_CHECK_DIGITS:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Checksum digits do not match")
+#     if len(iban) > 3:
+#         print(iban[2:4])
+#         if int(iban[2:4]) != MONTENEGRO_CHECK_DIGITS:
+#             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Checksum digits do not match")
 
-    if len(iban) > 21:
-        calculated_national_digits = 98 - int(calculate_check_digits(iban[4:20] + "00"))
+#     if len(iban) > 21:
+#         calculated_national_digits = 98 - int(calculate_check_digits(iban[4:20] + "00"))
 
-        if str(calculated_national_digits) != iban[20:23]:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="National check digits do not match")
+#         if str(calculated_national_digits) != iban[20:23]:
+#             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="National check digits do not match")
 
-    if len(iban) != 22:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="IBAN does not have the required length of 22 characters")
+#     if len(iban) != 22:
+#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="IBAN does not have the required length of 22 characters")
 
-    return JSONResponse(content=jsonable_encoder({"success": True, "message": "IBAN is valid", "success": True, "status": status.HTTP_200_OK}), status_code=status.HTTP_200_OK)
+#     return JSONResponse(content=jsonable_encoder({"success": True, "message": "IBAN might be valid", "success": True, "status": status.HTTP_200_OK}), status_code=status.HTTP_200_OK)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

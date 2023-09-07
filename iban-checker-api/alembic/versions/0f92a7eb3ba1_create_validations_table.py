@@ -7,6 +7,8 @@ Create Date: 2023-09-06 18:08:37.498297
 """
 from typing import Sequence, Union
 
+from uuid import uuid4
+
 from alembic import op
 import sqlalchemy as sa
 
@@ -20,7 +22,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
     op.create_table('validations',
-                    sa.Column('id', sa.String, primary_key=True, index=True),
+                    sa.Column('id', sa.String, primary_key=True, index=True, default=str(uuid4)),
                     sa.Column('status', sa.Enum("VALID", "INVALID", name="validation_status")),
                     sa.Column('session_id', sa.String, nullable=False),
                     sa.Column('iban', sa.String, nullable=False),
