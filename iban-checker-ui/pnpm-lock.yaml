@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@uidotdev/usehooks':
-    specifier: ^2.2.0
-    version: 2.2.0(react-dom@18.2.0)(react@18.2.0)
   '@unocss/reset':
     specifier: ^0.55.7
     version: 0.55.7
@@ -23,9 +20,6 @@ dependencies:
   happy-dom:
     specifier: ^10.11.2
     version: 10.11.2
-  lodash-es:
-    specifier: ^4.17.21
-    version: 4.17.21
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -894,17 +888,6 @@ packages:
       '@typescript-eslint/types': 6.0.0
       eslint-visitor-keys: 3.4.3
     dev: true
-
-  /@uidotdev/usehooks@2.2.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-K4tirEf3lvEgi/Z6Pv2aNR8r6YCobfg0N5AOkn3hhuWtGS8n7mMSL7RGFpE2Bj56oeLGGZXrVKteEwg4vGitGA==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@unocss/astro@0.55.7(vite@4.4.5):
     resolution: {integrity: sha512-mw8r14ArxUQBVCCisAJlF/WsZb650iBsduD/lXMk56N/nQ3MMArCcn62kcAxgZSb5tfIOQGQu/tbR8hEcD8y2g==}
