@@ -32,3 +32,5 @@ The project also contains a launch.json file for debugging with VSCode.
 4. Run tests
 
 ``` poetry run pytest --cov ```
+
+API will be running on ```http://localhost:8000```.

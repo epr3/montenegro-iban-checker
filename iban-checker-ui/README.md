@@ -28,3 +28,5 @@ This is the UI for the Montenegro IBAN checker. It validates the IBAN in real ti
 4. Run tests
 
 ``` pnpm run test ```
+
+Server will be running on ```http://localhost:5173```.
