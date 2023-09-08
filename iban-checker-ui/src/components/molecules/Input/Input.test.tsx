@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import Input from "./Input";
 
 describe("Input", () => {
-  it("Input to be in document", () => {
+  it("should be in the document", () => {
     render(
       <Input
         name="test"
@@ -17,7 +17,7 @@ describe("Input", () => {
     expect(screen.getByText("Test")).toBeInTheDocument();
   });
 
-  it("Input error to be in document", () => {
+  it("should display the error", () => {
     render(
       <Input
         name="test"

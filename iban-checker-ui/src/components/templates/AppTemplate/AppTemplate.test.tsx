@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import AppTemplate from "./AppTemplate";
 
 describe("App Template", () => {
-  it("AppTemplate to be in document", () => {
+  it("should be in the document", () => {
     render(
       <AppTemplate>
         <p>Test</p>
